@@ -1,0 +1,20 @@
+#ifndef dayview_idl
+#define dayview_idl
+
+#include <somobj.idl>
+
+interface DayView : SOMObject
+{
+  attribute void *owner;
+  void notifyDayPlanner(in long eventId);
+ 
+  #ifdef __SOMIDL__
+  implementation
+  {
+    releaseorder: _get_owner, _set_owner,
+                  notifyDayPlanner;
+  };
+  #endif
+};
+#endif
+

@@ -1,0 +1,7 @@
+#include <animal.idl>
+#include <fly.idl>
+
+interface Robin : Animal, FlyingObject
+{
+};
+

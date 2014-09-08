@@ -1,0 +1,33 @@
+#ifndef perserver_idl
+#define perserver_idl
+
+#include <somobj.idl>
+#include <somdserv.idl>
+#include <somdtype.idl>
+#include <snglicls.idl>
+
+interface PersistentServer : SOMDServer
+{
+  // Return the Persistent Storage Manager in this process 
+  SOMObject getPerStorMgr();
+
+  // Check to see if the persistent object exists
+  boolean objectExists(in string id);
+
+  // Restore a persistent object from its string ID
+  SOMObject restoreObjectFromId(in string id);
+
+  #ifdef __SOMIDL__
+  implementation
+  {
+    releaseorder: getPerStorMgr, objectExists, 
+                  restoreObjectFromId;
+
+    somdCreateObj : override;
+    dllname = "perserv.dll";
+    metaclass = SOMMSingleInstance;
+  };
+  #endif
+};
+#endif 
+

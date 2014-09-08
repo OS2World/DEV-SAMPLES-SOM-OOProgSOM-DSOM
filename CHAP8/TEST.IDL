@@ -1,0 +1,45 @@
+#include <somobj.idl>
+
+interface Test: SOMObject
+{
+  enum Fruit { apple, orange, strawberry };      
+
+  struct Dummy {
+        short  x, y;
+        SOMObject obj;
+        string name;
+        Fruit  afruit;
+        sequence<Fruit, 50> flist;
+        long   counts[10];
+  };
+ 
+  union Foo switch (long)
+  {
+     case 1: long x;
+     case 2: float y;
+     default: char z;
+  };
+
+  const unsigned long MAXSIZE = 50;
+
+  attribute Foo myfoo;
+  attribute double mydouble;
+  readonly attribute any anyvalue;
+  attribute sequence<long,MAXSIZE> longList;
+
+  void add(in string name);
+  string query(in short index, inout octet aByte);
+  long print(out boolean status);
+
+  #ifdef __SOMIDL__
+  implementation
+  {
+    releaseorder : _get_myfoo, _set_myfoo,
+                   _get_mydouble, _set_mydouble,
+                   _get_anyvalue, _set_anyvalue,
+                   _get_longList, _set_longList,
+                   add, query, print;
+  };
+  #endif
+};
+

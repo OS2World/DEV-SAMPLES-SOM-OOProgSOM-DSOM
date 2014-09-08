@@ -1,0 +1,33 @@
+#include <somobj.idl>
+
+interface Test: SOMObject
+{
+  const unsigned short MAXSIZE = 50;
+  union Foo switch (long)
+  {
+     case 1: long x;
+     case 2: float y;
+     default: char z;
+  };
+
+  attribute Foo myfoo;
+  attribute double mydouble;
+  attribute any anyvalue;
+  attribute sequence<long,MAXSIZE> longList;
+
+  void add(in string name);
+  string query(in short index, inout octet aByte);
+  long print(out boolean status);
+
+  #ifdef __SOMIDL__
+  implementation
+  {
+    releaseorder : _get_myfoo, _set_myfoo,
+                   _get_mydouble, _set_mydouble,
+                   _get_anyvalue, _set_anyvalue,
+                   _get_longList, _set_longList,
+                   add, query, print;
+  };
+  #endif
+};
+

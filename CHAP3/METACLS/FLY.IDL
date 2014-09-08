@@ -1,0 +1,32 @@
+#include <somobj.idl>
+#include <somcls.idl>
+
+interface FlyingObject;
+interface MetaFlyingObject : SOMClass
+{
+    readonly attribute short count;
+    FlyingObject createFlyingObject(in short speed);
+
+    #ifdef __SOMIDL__
+    implementation
+    {
+       releaseorder : _get_count,
+                      createFlyingObject;
+    };
+    #endif
+};
+
+interface FlyingObject : SOMObject
+{
+    attribute short speed;
+
+    #ifdef __SOMIDL__
+    implementation
+    {
+       releaseorder : _get_speed, _set_speed;
+       somInit: override;
+       metaclass = MetaFlyingObject;
+    };
+    #endif
+};
+

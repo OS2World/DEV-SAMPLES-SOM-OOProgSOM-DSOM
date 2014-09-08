@@ -1,0 +1,35 @@
+#ifndef day_idl
+#define day_idl
+
+#include <po.idl>
+
+interface WorkItem;
+interface Day : SOMPPersistentObject
+{
+  const unsigned long MAXITEM = 50;
+  attribute long date; 
+  attribute sequence<WorkItem,MAXITEM> workList;
+
+  short book(in WorkItem entry);
+  short removeItem(in string start, in string end, in string desc);
+
+  #ifdef __SOMIDL__
+  implementation
+  {
+    releaseorder : _get_date, _set_date,
+                   _get_workList, _set_workList,
+                   book, removeItem;
+
+    somInit:     override;
+    somUninit:   override;
+    sompIsDirty: override;
+
+    dllname = "calendar.dll";
+
+    date:     persistent;
+    workList: persistent;
+  };
+  #endif
+};
+#endif
+

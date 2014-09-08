@@ -1,0 +1,16 @@
+#include <somobj.idl>
+
+interface Context;
+
+interface ContextExample : SOMObject
+{
+  void startup() context(userid, password);
+
+  #ifdef __SOMIDL__
+  implementation
+  {
+    releaseorder : startup;
+  };
+  #endif
+};
+

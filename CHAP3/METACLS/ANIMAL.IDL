@@ -1,0 +1,35 @@
+#include <somobj.idl>
+#include <somcls.idl>
+
+interface Animal;
+interface MetaAnimal : SOMClass
+{
+    readonly attribute short count;    // number of objects
+    Animal createAnimal(in string name);
+
+    #ifdef __SOMIDL__
+    implementation
+    {
+       releaseorder : createAnimal, _get_count;
+    };
+    #endif
+};
+
+interface Animal : SOMObject
+{
+    attribute string name;
+
+    void sleep();
+
+    #ifdef __SOMIDL__
+    implementation
+    {
+       releaseorder : _get_name, _set_name,
+                      sleep;
+
+       somInit: override;
+       metaclass = MetaAnimal;
+    };
+    #endif
+};
+

@@ -1,0 +1,46 @@
+#ifndef day_idl
+#define day_idl
+
+#include <replicbl.idl>
+
+interface WorkItem;
+
+interface Day : SOMRReplicbl
+{
+  const unsigned long MAXITEM = 50;
+  attribute long date; 
+  attribute sequence<WorkItem,MAXITEM> workList;
+
+  short book2(in string start, in string end, in string desc);
+  short removeItem(in string start, in string end, in string desc);
+
+  void  initReplica(in string replicaName);
+ 
+  void registerView(in SOMObject anyObj, in string methodName);
+  void notifyView(in long eventId);
+  SOMObject getViewObject();
+
+  #ifdef __SOMIDL__
+  implementation
+  {
+    releaseorder : _get_date, _set_date,
+                   _get_workList, _set_workList,
+                   book2, removeItem,
+                   initReplica, registerView, notifyView,
+                   getViewObject;
+
+    string            methodName;
+    SOMObject         objectPtr;
+
+    somInit:          override;
+    somUninit:        override;
+    somrGetState:     override;
+    somrSetState:     override;
+    somrDoDirective:  override;
+
+    dllname = "calendar.dll";
+  };
+  #endif
+};
+#endif
+

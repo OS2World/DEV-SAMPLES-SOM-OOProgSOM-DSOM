@@ -1,0 +1,14 @@
+#include <empl.idl>
+
+interface Manager : Employee
+{
+    short bonus();
+
+    #ifdef __SOMIDL__
+    implementation
+    {
+       releaseorder : bonus;
+    };
+    #endif
+};
+

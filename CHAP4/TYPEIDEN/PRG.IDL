@@ -1,0 +1,14 @@
+#include <empl.idl>
+
+interface Programmer : Employee
+{
+    short overtime();
+
+    #ifdef __SOMIDL__
+    implementation
+    {
+       releaseorder : overtime;
+    };
+    #endif
+};
+

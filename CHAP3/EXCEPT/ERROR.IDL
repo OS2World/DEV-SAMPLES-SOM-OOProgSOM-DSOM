@@ -1,0 +1,22 @@
+#include <somobj.idl>
+
+interface ErrorExample : SOMObject
+{
+  enum reasonCode { OK, FATAL, INCOMPLETE };
+
+  exception BadCall 
+  {
+        long       errorCode;
+        char       reason[80];
+  };
+
+  void execute() raises(BadCall);
+
+  #ifdef __SOMIDL__
+  implementation
+  {
+       releaseorder : execute;
+  };
+  #endif
+};
+

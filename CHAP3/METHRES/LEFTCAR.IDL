@@ -1,0 +1,12 @@
+#include <car.idl>
+
+interface LeftSteeringCar : Car
+{
+    #ifdef __SOMIDL__
+    implementation
+    {
+        printCarSpec: override;
+    };
+    #endif
+};
+

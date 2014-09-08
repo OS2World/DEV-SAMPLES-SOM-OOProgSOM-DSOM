@@ -1,0 +1,14 @@
+#include <somobj.idl>
+
+interface Employee : SOMObject
+{
+    short salary();
+
+    #ifdef __SOMIDL__
+    implementation
+    {
+       releaseorder : salary;
+    };
+    #endif
+};
+

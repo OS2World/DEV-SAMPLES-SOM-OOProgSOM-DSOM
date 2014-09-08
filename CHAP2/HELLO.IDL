@@ -1,0 +1,16 @@
+#include <somobj.idl>
+interface Hello : SOMObject 
+{
+  attribute string msg;
+
+  void printHello();
+
+  #ifdef __SOMIDL__
+  implementation
+  {
+    releaseorder : printHello,
+                   _set_msg, _get_msg;
+  };
+  #endif
+};
+

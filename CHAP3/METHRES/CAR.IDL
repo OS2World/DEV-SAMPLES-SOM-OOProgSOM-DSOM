@@ -1,0 +1,38 @@
+#include <somobj.idl>
+#include <somcls.idl>
+
+interface Car;
+interface MetaCar : SOMClass
+{
+    Car createCar(in string make, in string model, in long price);
+
+    #ifdef __SOMIDL__
+    implementation
+    {
+       releaseorder : createCar;
+    };
+    #endif
+};
+
+interface Car : SOMObject
+{
+    attribute string make;
+    attribute string model;
+    attribute long   price;
+
+    void printCarSpec();
+
+    #ifdef __SOMIDL__
+    implementation
+    {
+       releaseorder : _set_make,  _get_make,
+                      _set_model, _get_model,
+                      _set_price, _get_price,
+                      printCarSpec;
+
+       printCarSpec: namelookup;
+       metaclass = MetaCar;
+    };
+    #endif
+};
+

@@ -1,0 +1,18 @@
+#include <somobj.idl>
+
+interface Cat : SOMObject
+{
+    attribute string name;
+
+    void display();       // Print the string: "I'm a Cat"
+
+    #ifdef __SOMIDL__
+    implementation
+    {
+       releaseorder : display, 
+                      _get_name, _set_name;
+       dllname = "domestic.dll";
+    };
+    #endif
+};
+

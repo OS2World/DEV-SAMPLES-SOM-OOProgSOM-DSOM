@@ -1,0 +1,22 @@
+#include <somobj.idl>
+
+interface Employee;
+interface Company : SOMObject 
+{
+  const unsigned long MAXNUM=10;
+
+  attribute sequence<Employee,MAXNUM> empList;
+
+  long addEmployee(in Employee entry);
+
+  #ifdef __SOMIDL__
+  implementation
+  {
+    releaseorder : _get_empList, _set_empList,
+                   addEmployee;
+    somInit: override;   
+    somUninit: override;
+  };
+  #endif
+};
+

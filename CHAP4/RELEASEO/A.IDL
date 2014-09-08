@@ -1,0 +1,28 @@
+#include <somobj.idl>
+
+// You have to try this exercise yourself. Just uncomment
+// the lines and run NMAKE
+//
+interface A : SOMObject
+{
+    attribute short val1;
+
+//    add the following
+//    attribute  string val3;
+
+    attribute short  val2;
+
+    void display();
+
+    #ifdef __SOMIDL__
+    implementation
+    {
+       releaseorder : display, 
+                      _get_val1, _set_val1,
+                      _get_val2, _set_val2;
+
+//                    _get_val3, _set_val3;
+    };
+    #endif
+};
+
